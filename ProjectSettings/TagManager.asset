@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - square
+  - key
   layers:
   - Default
   - TransparentFX

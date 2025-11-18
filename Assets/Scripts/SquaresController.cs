@@ -32,18 +32,6 @@ public class SquaresController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //string currentSquaresStateStr = "";
-        //for (int i = 0; i < 3; i++)
-        //{
-        //    for (int j = 0; j < 3; j++)
-        //    {
-        //        currentSquaresStateStr += currentSquaresState[i, j];
-        //    }
-        //    currentSquaresStateStr += "\n";
-        //}
-        //Debug.Log(currentSquaresStateStr);
-        Debug.Log(selectedSquare);
-
         // no square selected
         if (Input.touchCount != 1)
         {
@@ -77,8 +65,6 @@ public class SquaresController : MonoBehaviour
     void SelectSquare(Vector3 touchPos)
     {
         RaycastHit2D hit = Physics2D.Raycast(touchPos, Vector2.zero);
-        Debug.Log("touch pos: " + touchPos);
-        Debug.Log("hit collider: " + hit.collider);
         if (hit.collider != null && hit.collider.tag == "square")
         {
             selectedSquare = hit.collider.transform;
