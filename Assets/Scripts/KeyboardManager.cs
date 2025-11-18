@@ -1,8 +1,9 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class KeyboardManager : MonoBehaviour
 {
-    private static string output = "";
+    public Text output;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -34,21 +35,21 @@ public class KeyboardManager : MonoBehaviour
                 switch (hitKey)
                 {
                     case "delete":
-                        output = output.Remove(output.Length - 1);
+                        if (output.text.Length > 0)
+                        {
+                            output.text = output.text.Remove(output.text.Length - 1);
+                        }
                         break;
 
                     case "enter":
-                        output += "enter";
                         break;
 
                     default:
-                        output += hitKey;
+                        output.text += hitKey;
                         break;
 
                 }
             }
-
-            Debug.Log(output);
         }
     }
 }
