@@ -1,11 +1,8 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
-public class KeyboardManager : MonoBehaviour
+public class SportMenu : MonoBehaviour
 {
-    public Text output;
-
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -29,26 +26,18 @@ public class KeyboardManager : MonoBehaviour
         if (touch.phase == TouchPhase.Canceled || touch.phase == TouchPhase.Ended)
         {
             RaycastHit2D hit = Physics2D.Raycast(touchPos, Vector2.zero);
-            if (hit.collider != null && hit.collider.tag == "key")
+            if (hit.collider != null)
             {
-                string hitKey = hit.collider.name;
+                string hitButton = hit.collider.name;
 
-                switch (hitKey)
+                switch (hitButton)
                 {
-                    case "delete":
-                        if (output.text.Length > 0)
-                        {
-                            output.text = output.text.Remove(output.text.Length - 1);
-                        }
+                    case "Muscu": case "Walk": case "Cardio":
+                        DailyCategoriesMenu.currentDailyCategory = hitButton;
+                        SceneManager.LoadScene("KeyboardInput");
                         break;
-
-                    case "enter":
-                        DailyCategoriesMenu.inputValue = int.Parse(output.text);
+                    case "Back":
                         SceneManager.LoadScene("DailyInputs");
-                        break;
-
-                    default:
-                        output.text += hitKey;
                         break;
 
                 }
