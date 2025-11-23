@@ -21,9 +21,9 @@ public class ScoreManager : MonoBehaviour
 
     private static int caloriesPerDayMargin = 300;
     private static int tooLowCaloriesScoreRatio = 5;
-    private static int muscuRatio = 17;
-    private static int walkRatio = 7;
-    private static int cardioRatio = 9;
+    private static float muscuRatio = 17;
+    private static float walkRatio = 1f/10;
+    private static float cardioRatio = 9;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -64,24 +64,28 @@ public class ScoreManager : MonoBehaviour
 
     public static void ChangeSport(string sportName, int value)
     {
-        int ratio = 0;
+        float ratio = 0;
+        string sportNameToDisplay = "";
 
         switch (sportName)
         {
             case "Muscu":
                 ratio = muscuRatio;
+                sportNameToDisplay = "Musculation";
                 break;
             case "Walk":
+                sportNameToDisplay = "Marche";
                 ratio = walkRatio;
                 break;
             case "Cardio":
+                sportNameToDisplay = "Cardio";
                 ratio = cardioRatio;
                 break;
         }
 
-
-        int tmpScoreChange = ratio * value;
+        Debug.Log(ratio);
+        int tmpScoreChange = (int) (ratio * value);
         currentScoreChanges.totalChanges += tmpScoreChange;
-        currentScoreChanges.positiveChanges.Add(tmpScoreChange.ToString() + " " + sportName);
+        currentScoreChanges.positiveChanges.Add(tmpScoreChange.ToString() + " " + sportNameToDisplay);
     }
 }
