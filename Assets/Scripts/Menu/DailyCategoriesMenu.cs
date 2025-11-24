@@ -3,12 +3,10 @@ using UnityEngine.SceneManagement;
 
 public class DailyCategoriesMenu : MonoBehaviour
 {
-    private static bool caloriesButtonClicked = false;
-
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        if (!caloriesButtonClicked)
+        if (DailyInput.currentDailyInput.calories == 0)
         {
             GameObject.Find("Validate").GetComponent<SpriteRenderer>().color = new Color(0.5f, 0.5f, 0.5f);
         }
@@ -24,14 +22,13 @@ public class DailyCategoriesMenu : MonoBehaviour
         switch (hitButton)
         {
             case "Calories":
-                caloriesButtonClicked = true;
                 KeyboardManager.GetInput("Combien de calories aujourd'hui ?", hitButton);
                 break;
             case "Sport":
                 SceneManager.LoadScene("SportInputs");
                 break;
             case "Validate":
-                if (caloriesButtonClicked)
+                if (DailyInput.currentDailyInput.calories != 0)
                 {
                     SceneManager.LoadScene("DisplayScore");
                 }

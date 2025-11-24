@@ -47,17 +47,20 @@ public class KeyboardManager : MonoBehaviour
 
     private void ValidatePlayerInput(int playerInput)
     {
-        // Change score depending on input value
+        // Change daily input depending on input type
         switch (inputType)
         {
             case "Calories":
-                ScoreManager.ChangeCalories(playerInput);
+                DailyInput.currentDailyInput.calories = playerInput;
                 break;
-
             case "Muscu":
+                DailyInput.currentDailyInput.muscu = playerInput;
+                break;
             case "Walk":
+                DailyInput.currentDailyInput.walk = playerInput;
+                break;
             case "Cardio":
-                ScoreManager.ChangeSport(inputType, playerInput);
+                DailyInput.currentDailyInput.cardio = playerInput;
                 break;
         }
 

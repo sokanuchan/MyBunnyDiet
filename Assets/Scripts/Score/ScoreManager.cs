@@ -1,29 +1,24 @@
 using System.Collections.Generic;
 using UnityEngine;
+using static ScoreManager;
 
 public class ScoreManager : MonoBehaviour
 {
     public static int caloriesPerDayGoal = 2300;
-    public struct ScoreChanges
-    {
-        public List<string> positiveChanges;
-        public List<string> negativeChanges;
-        public int totalChanges;
 
-        public ScoreChanges (List<string> positiveChanges, List<string> negativeChanges, int totalChanges)
-        {
-            this.positiveChanges = positiveChanges;
-            this.negativeChanges = negativeChanges;
-            this.totalChanges = totalChanges;
-        }
-    }
-    public static ScoreChanges currentScoreChanges = new ScoreChanges(new List<string>(), new List<string>(), 0);
-
+    // constants
     private static int caloriesPerDayMargin = 300;
     private static int tooLowCaloriesScoreRatio = 5;
     private static float muscuRatio = 17;
     private static float walkRatio = 1f/10;
     private static float cardioRatio = 9;
+
+    public class ScoreChanges
+    {
+        public List<string> positiveChanges = new List<string>();
+        public List<string> negativeChanges = new List<string>();
+        public int totalChanges = 0;
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -37,7 +32,7 @@ public class ScoreManager : MonoBehaviour
         
     }
 
-    public static void ChangeCalories(int calories)
+    private static void ChangeCaloriesScore(ScoreChanges scoreChanges, int calories)
     {
         int tmpScoreChange = 0;
 
@@ -45,47 +40,47 @@ public class ScoreManager : MonoBehaviour
         if (calories < (caloriesPerDayGoal - caloriesPerDayMargin))
         {
             tmpScoreChange = (calories + caloriesPerDayMargin - caloriesPerDayGoal) / tooLowCaloriesScoreRatio;
-            currentScoreChanges.totalChanges += tmpScoreChange;
-            currentScoreChanges.negativeChanges.Add(tmpScoreChange.ToString() + " " + "Calories en dessous du seuil minimum");
+            scoreChanges.totalChanges += tmpScoreChange;
+            scoreChanges.negativeChanges.Add(tmpScoreChange.ToString() + " " + "Calories en dessous du seuil minimum");
         }
 
         // compare calories to calories goal
         tmpScoreChange = caloriesPerDayGoal - calories;
-        currentScoreChanges.totalChanges += tmpScoreChange;
+        scoreChanges.totalChanges += tmpScoreChange;
         if (tmpScoreChange < 0) // too many calories
         {
-            currentScoreChanges.negativeChanges.Add(tmpScoreChange.ToString() + " " + "Surplus calorique");
+            scoreChanges.negativeChanges.Add(tmpScoreChange.ToString() + " " + "Surplus calorique");
         }
         else // calorie deficit
         {
-            currentScoreChanges.positiveChanges.Add(tmpScoreChange.ToString() + " " + "Deficit calorique");
+            scoreChanges.positiveChanges.Add(tmpScoreChange.ToString() + " " + "Deficit calorique");
         }
     }
 
-    public static void ChangeSport(string sportName, int value)
+    public static void ChangeSportScore(ScoreChanges scoreChanges, float ratioToUse, string sportNameToDisplay, int value)
     {
-        float ratio = 0;
-        string sportNameToDisplay = "";
-
-        switch (sportName)
-        {
-            case "Muscu":
-                ratio = muscuRatio;
-                sportNameToDisplay = "Musculation";
-                break;
-            case "Walk":
-                sportNameToDisplay = "Marche";
-                ratio = walkRatio;
-                break;
-            case "Cardio":
-                sportNameToDisplay = "Cardio";
-                ratio = cardioRatio;
-                break;
+        if (value == 0)
+        {  
+            return; 
         }
 
-        Debug.Log(ratio);
-        int tmpScoreChange = (int) (ratio * value);
-        currentScoreChanges.totalChanges += tmpScoreChange;
-        currentScoreChanges.positiveChanges.Add(tmpScoreChange.ToString() + " " + sportNameToDisplay);
+        int tmpScoreChange = (int) (ratioToUse * value);
+        scoreChanges.totalChanges += tmpScoreChange;
+        scoreChanges.positiveChanges.Add(tmpScoreChange.ToString() + " " + sportNameToDisplay);
+    }
+
+    public static ScoreChanges GetScoreChanges(DailyInput dailyInput)
+    {
+        ScoreChanges scoreChanges = new ScoreChanges();
+
+        // calories changes
+        ChangeCaloriesScore(scoreChanges, dailyInput.calories);
+
+        // sport changes
+        ChangeSportScore(scoreChanges, muscuRatio, "Musculation", dailyInput.muscu);
+        ChangeSportScore(scoreChanges, walkRatio, "Marche", dailyInput.walk);
+        ChangeSportScore(scoreChanges, cardioRatio, "Cardio", dailyInput.cardio);
+
+        return scoreChanges;
     }
 }

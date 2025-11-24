@@ -15,22 +15,25 @@ public class ScoreDisplayer : MonoBehaviour
 
     private void DisplayScoreChanges()
     {
+        // Get score changes
+        ScoreManager.ScoreChanges scoreChanges = ScoreManager.GetScoreChanges(DailyInput.currentDailyInput);
+
         // display bonus
         bonus.text = "";
-        foreach (string positiveChange in ScoreManager.currentScoreChanges.positiveChanges)
+        foreach (string positiveChange in scoreChanges.positiveChanges)
         {
             bonus.text += "• +" + positiveChange + "\n";
         }
 
         // display malus
         malus.text = "";
-        foreach (string negativeChange in ScoreManager.currentScoreChanges.negativeChanges)
+        foreach (string negativeChange in scoreChanges.negativeChanges)
         {
             malus.text += "• " + negativeChange + "\n";
         }
 
         // display total
-        total.text = ScoreManager.currentScoreChanges.totalChanges.ToString();
+        total.text = scoreChanges.totalChanges.ToString();
     }
 
     // Update is called once per frame
