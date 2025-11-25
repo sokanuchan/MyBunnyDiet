@@ -2,6 +2,8 @@ using System.Collections.Generic;
 
 public class DateUtils
 {
+    public static string dailyInputDateFormat = "yyyy-MM-dd";
+
     public static string GetMonthName(int monthIndex)
     {
         List<string> months = new List<string>()
@@ -20,6 +22,6 @@ public class DateUtils
             "Decembre"
         }; 
         
-        return months[monthIndex];
+        return months[monthIndex - 1];
     }
 }

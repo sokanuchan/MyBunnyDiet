@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class ScoreDisplayer : MonoBehaviour
 {
@@ -39,6 +40,16 @@ public class ScoreDisplayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        // get hit button
+        string hitButton = MenuManager.GetHitButton();
+
+        // handle hit button
+        switch (hitButton)
+        {
+            case "Validate":
+                ScoreManager.UpdateScore();
+                SceneManager.LoadScene("MainMenu");
+                break;
+        }
     }
 }

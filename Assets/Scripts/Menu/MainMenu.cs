@@ -19,7 +19,7 @@ public class MainMenu : MonoBehaviour
         switch (hitButton)
         {
             case "DailyInputs":
-                SceneManager.LoadScene("DailyInputs");
+                SceneManager.LoadScene("Calendar");
                 break;
         }
     }

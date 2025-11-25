@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 public class DailyInput
@@ -21,7 +22,15 @@ public class DailyInput
     public int cardio = 0;
 
     // mood
-    Mood mood = Mood.None;
+    public Mood mood = Mood.None;
 
+    // computed score
+    public int score = 0;
+
+    // current player input
     public static DailyInput currentDailyInput = new DailyInput();
+    public static string currentDate;
+
+    // all player inputs
+    public static Dictionary<string, DailyInput> playerInputs = new Dictionary<string, DailyInput>();
 }

@@ -5,6 +5,9 @@ using static ScoreManager;
 public class ScoreManager : MonoBehaviour
 {
     public static int caloriesPerDayGoal = 2300;
+    public static int totalScore = 0;
+
+    private static int currentScore;
 
     // constants
     private static int caloriesPerDayMargin = 300;
@@ -81,6 +84,33 @@ public class ScoreManager : MonoBehaviour
         ChangeSportScore(scoreChanges, walkRatio, "Marche", dailyInput.walk);
         ChangeSportScore(scoreChanges, cardioRatio, "Cardio", dailyInput.cardio);
 
+        // update currentScore
+        currentScore = scoreChanges.totalChanges;
+
         return scoreChanges;
+    }
+
+    public static void UpdateScore()
+    {
+        // get current date
+        string currentDate = DailyInput.currentDate;
+
+        // get old score
+        int oldScore = 0;
+        if (DailyInput.playerInputs.ContainsKey(currentDate))
+        {
+            oldScore = DailyInput.playerInputs[currentDate].score;
+        }
+
+        // get new score
+        int newScore = currentScore;
+
+        // update total score
+        int scoreDiff = newScore - oldScore;
+        totalScore += scoreDiff;
+
+        // update player input
+        DailyInput.currentDailyInput.score = newScore;
+        DailyInput.playerInputs[currentDate] = DailyInput.currentDailyInput;
     }
 }
