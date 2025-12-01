@@ -21,6 +21,9 @@ public class MainMenu : MonoBehaviour
             case "DailyInputs":
                 SceneManager.LoadScene("Calendar");
                 break;
+            case "Bunnies":
+                SceneManager.LoadScene("Bunnies");
+                break;
         }
     }
 }

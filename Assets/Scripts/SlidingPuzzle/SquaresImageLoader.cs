@@ -15,7 +15,7 @@ public class SquaresImageLoader : MonoBehaviour
         // load sprite for each square
         for (int i = 0; i < squares.Count(); i++)
         {
-            squares[i].sprite = Resources.Load<Sprite>("Images/Bunnies/Bunny-" + bunnyIndex.ToString() + "/SPlittedPixelArt/sprite_" + i.ToString());
+            squares[i].sprite = Resources.Load<Sprite>("Images/Bunnies/Bunny-" + bunnyIndex.ToString() + "/SplittedPixelArt/sprite_" + i.ToString());
         }
     }
 

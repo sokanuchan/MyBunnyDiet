@@ -19,6 +19,8 @@ public class ScoreDisplayer : MonoBehaviour
     public Transform bunnyStartPos;
     public Transform bunnyEndPos;
     public GameObject scoreDisplay;
+    public GameObject bunnyPart;
+    public GameObject homeButton;
 
     private int scoreProgressStart;
     private int scoreProgressEnd;
@@ -26,7 +28,10 @@ public class ScoreDisplayer : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        // hide everything that is not used right now
         scorePorgressionPopup.SetActive(false);
+        bunnyPart.SetActive(false);
+        homeButton.SetActive(false);
 
         DisplayScoreChanges();
     }
@@ -128,6 +133,8 @@ public class ScoreDisplayer : MonoBehaviour
             // bunny u-turn
             hopingBunny.GetComponent<SpriteRenderer>().flipX = false;
         }
+
+        homeButton.SetActive(true);
     }
 
     private IEnumerator ScoreProgress()
@@ -160,6 +167,12 @@ public class ScoreDisplayer : MonoBehaviour
 
         // stop bunny hops
         hopingBunny.SetBool("isHoping", false);
+
+        // get bunny part if score bar is full
+        if (scoreSlider.value == 1000)
+        {
+            yield return ShowBunnyPart(); 
+        }
     }
 
     private Vector3 GetBunnyPos(float scoreSliderValue)
@@ -169,5 +182,41 @@ public class ScoreDisplayer : MonoBehaviour
             hopingBunny.transform.position.y, 
             hopingBunny.transform.position.z
             );
+    }
+
+    private IEnumerator ShowBunnyPart()
+    {
+        // instanciate bunny part show up
+        GameObject bunnyPartShowPrefab = Resources.Load<GameObject>("Prefabs/BunnyPartShow");
+        Vector3 bunnyPartShowAnimationPosition = new Vector3(bunnyPart.transform.position.x, bunnyPart.transform.position.y, bunnyPart.transform.position.z + 1);
+        GameObject bunnyPartShowAnimation = Instantiate(bunnyPartShowPrefab, bunnyPartShowAnimationPosition, Quaternion.identity);
+
+        // wait untill end of animation
+        float animationTime = bunnyPartShowAnimation.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).length;
+        yield return new WaitForSeconds(animationTime);
+
+        // fade in bunny part
+        bunnyPart.SetActive(true);
+        for (float i = 1; i <= 200; i++)
+        {
+            bunnyPart.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, i / 200);
+            yield return new WaitForSeconds(1f / 100);
+        }
+
+        // wait for player click
+        while (Input.touches.Length == 0)
+        {
+            yield return null;
+        }
+        Touch touch = Input.touches[0];
+        while (touch.phase != TouchPhase.Canceled && touch.phase != TouchPhase.Ended)
+        {
+            yield return null;
+            touch = Input.touches[0];
+        }
+
+        // remove bunny part show
+        Destroy(bunnyPartShowAnimation);
+        bunnyPart.SetActive(false);
     }
 }
