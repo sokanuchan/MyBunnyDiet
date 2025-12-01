@@ -6,6 +6,7 @@ public class ScoreManager : MonoBehaviour
 {
     public static int caloriesPerDayGoal = 2300;
     public static int totalScore = 0;
+    public static int nbBunnyParts = 0;
 
     private static int currentScore;
 
@@ -108,6 +109,9 @@ public class ScoreManager : MonoBehaviour
         // update total score
         int scoreDiff = newScore - oldScore;
         totalScore += scoreDiff;
+
+        // update bunny parts
+        nbBunnyParts = Mathf.Max(totalScore / 1000, nbBunnyParts);
 
         // update player input
         DailyInput.currentDailyInput.score = newScore;
