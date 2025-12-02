@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -9,8 +10,13 @@ public class BunniesMenu : MonoBehaviour
     public List<GameObject> bunnies;
     public GameObject left;
     public GameObject right;
+    public GameObject bunnyView;
+    public BoxCollider2D homeButton;
+    public SpriteRenderer pixelButton;
 
     private int pageIndex = 0;
+    private bool isPixelButtonSelected = false;
+    private int currentBunny = 0;
 
     private static List<int> unlockedBunnies = new List<int>() { 1 };
 
@@ -20,6 +26,7 @@ public class BunniesMenu : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        bunnyView.SetActive(false);
         UpdateBunnies();
     }
 
@@ -33,7 +40,6 @@ public class BunniesMenu : MonoBehaviour
         for (int i = 0; i < bunnies.Count; ++i)
         {
             int bunnyNb = pageIndex * bunnies.Count + i + 1;
-            Debug.Log(bunnyNb);
 
             // already done bunnies
             SpriteRenderer bunnySR = bunnies[i].transform.Find("bunnyPreview").GetComponent<SpriteRenderer>();
@@ -47,7 +53,6 @@ public class BunniesMenu : MonoBehaviour
             }
 
             // locked / unlocked bunnies
-            print(ScoreManager.nbBunnyParts / 7);
             if (bunnyNb <= (ScoreManager.nbBunnyParts / 7) + 1)
             {
                 bunnies[i].GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Images/UI/Bunnies/QuestionMarkWhite");
@@ -79,18 +84,62 @@ public class BunniesMenu : MonoBehaviour
                 pageIndex++;
                 UpdateBunnies();
                 break;
+            case "Back":
+                BunnyViewDisplay(false);
+                break;
+            case "Pixel":
+                HandlePixelButton();
+                break;
+
         }
 
         // handle bunny
         if (hitButton.StartsWith("Bunny"))
         {
             int bunnyNb = int.Parse(GameObject.Find(hitButton).transform.Find("BunnyIndex").GetComponent<Text>().text);
-            ShowBunny(bunnyNb);
+            if (unlockedBunnies.Contains(bunnyNb))
+            {
+                ShowBunny(bunnyNb);
+            }
         }
     }
 
     private void ShowBunny(int bunnyNb)
     {
+        BunnyViewDisplay(true);
+        bunnyView.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Images/Bunnies/Bunny-" + bunnyNb.ToString() + "/Complete");
+        currentBunny = bunnyNb;
+    }
 
+    private void BunnyViewDisplay(bool show)
+    {
+        bunnyView.SetActive(show);
+
+        homeButton.enabled = !show;
+        left.GetComponent<CircleCollider2D>().enabled = !show;
+        right.GetComponent<CircleCollider2D>().enabled = !show;
+        foreach (GameObject bunny in bunnies)
+        {
+            bunny.GetComponent<BoxCollider2D>().enabled = !show;
+        }
+
+        isPixelButtonSelected = !show;
+        pixelButton.sprite = Resources.Load<Sprite>("Images/UI/Bunnies/PixelNotSelected");
+    }
+
+    private void HandlePixelButton()
+    {
+        isPixelButtonSelected = !isPixelButtonSelected;
+
+        if (!isPixelButtonSelected)
+        {
+            bunnyView.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Images/Bunnies/Bunny-" + currentBunny.ToString() + "/Complete");
+            pixelButton.sprite = Resources.Load<Sprite>("Images/UI/Bunnies/PixelNotSelected");
+        }
+        else
+        {
+            bunnyView.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Images/Bunnies/Bunny-" + currentBunny.ToString() + "/CompletePixelArt");
+            pixelButton.sprite = Resources.Load<Sprite>("Images/UI/Bunnies/PixelSelected");
+        }
     }
 }
