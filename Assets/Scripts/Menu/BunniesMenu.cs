@@ -19,7 +19,7 @@ public class BunniesMenu : MonoBehaviour
     private bool isPixelButtonSelected = false;
     private int currentBunny = 0;
 
-    private static List<int> unlockedBunnies = new List<int>() { };
+    public static List<int> unlockedBunnies = new List<int>() { };
 
     // constants
     private int nbBunnies = 30;
@@ -104,7 +104,8 @@ public class BunniesMenu : MonoBehaviour
             }
             else if (bunnyNb <= (ScoreManager.nbBunnyParts / 7) + 1)
             {
-                SquaresImageLoader.nbBunnyParts = ScoreManager.nbBunnyParts - (bunnyNb - 1) * 8;
+                SquaresImageLoader.nbBunnyParts = Mathf.Min(ScoreManager.nbBunnyParts - (bunnyNb - 1) * 8, 8);
+                SquaresImageLoader.bunnyIndex = bunnyNb;
                 SceneManager.LoadScene("SlidingPuzzle");
             }
         }

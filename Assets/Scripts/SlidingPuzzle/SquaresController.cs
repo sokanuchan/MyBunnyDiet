@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -13,11 +14,13 @@ public class SquaresController : MonoBehaviour
     private Transform selectedSquare;
     private Vector3 originPosition;
     private Vector3 direction;
+    private bool isPuzzleSolved = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         LoadSquares();
+
         if (SquaresImageLoader.nbBunnyParts == 8)
         {
             Shuffle(500);
@@ -36,7 +39,7 @@ public class SquaresController : MonoBehaviour
     void Update()
     {
         // no game if bunny is not complete yet
-        if (SquaresImageLoader.nbBunnyParts == 8)
+        if (SquaresImageLoader.nbBunnyParts == 8 && !isPuzzleSolved)
         {
             HandleSlidingSquares();
         }
@@ -83,6 +86,9 @@ public class SquaresController : MonoBehaviour
         {
             ReleaseSquare();
         }
+
+        // check if puzzle is solved
+        CheckPuzzleSolved();
     }
 
     void SelectSquare(Vector3 touchPos)
@@ -167,7 +173,28 @@ public class SquaresController : MonoBehaviour
         return Vector3.zero;
     }
 
-    public static void Shuffle(int shuffleCount)
+    private void CheckPuzzleSolved()
+    {
+        // check that each square is at its place
+        for (int squareRowIndex = 0; squareRowIndex < 3; squareRowIndex++)
+        {
+            for (int squareColumnIndex = 0; squareColumnIndex < 3; squareColumnIndex++)
+            {
+                if (currentSquaresState[squareRowIndex, squareColumnIndex] != squareRowIndex * 3 + squareColumnIndex)
+                {
+                    return;
+                }
+            }
+        }
+
+        // puzzle is solved if we are here
+        GameObject crackers = Instantiate(Resources.Load<GameObject>("Prefabs/crackers"), new Vector3(1, -1, -1), Quaternion.identity);
+        Destroy(crackers, crackers.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).length);
+        isPuzzleSolved = true;
+        BunniesMenu.unlockedBunnies.Add(SquaresImageLoader.bunnyIndex);
+    }
+
+    private void Shuffle(int shuffleCount)
     {
         int empty_square_y = 2;
         int empty_square_x = 2;
