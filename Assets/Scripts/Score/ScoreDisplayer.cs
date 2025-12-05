@@ -197,6 +197,10 @@ public class ScoreDisplayer : MonoBehaviour
 
         // fade in bunny part
         bunnyPart.SetActive(true);
+        int nbBunnyPart = int.Parse(scoreProgressLowerBound.text) / 1000;
+        int bunnyIndex = nbBunnyPart / 8 + 1;
+        int bunnyPartIndex = nbBunnyPart % 8;
+        bunnyPart.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Images/Bunnies/Bunny-" + bunnyIndex + "/SplittedPixelArt/sprite_" + bunnyPartIndex);
         for (float i = 1; i <= 200; i++)
         {
             bunnyPart.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, i / 200);

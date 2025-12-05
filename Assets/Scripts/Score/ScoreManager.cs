@@ -6,7 +6,7 @@ public class ScoreManager : MonoBehaviour
 {
     public static int caloriesPerDayGoal = 2300;
     public static int totalScore = 0;
-    public static int nbBunnyParts = 16;
+    public static int nbBunnyParts = 0;
 
     private static int currentScore;
 

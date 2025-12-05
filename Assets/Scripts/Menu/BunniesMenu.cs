@@ -14,11 +14,12 @@ public class BunniesMenu : MonoBehaviour
     public BoxCollider2D homeButton;
     public SpriteRenderer pixelButton;
 
-    private int pageIndex = 0;
+    public static int pageIndex = 0;
+
     private bool isPixelButtonSelected = false;
     private int currentBunny = 0;
 
-    private static List<int> unlockedBunnies = new List<int>() { 1 };
+    private static List<int> unlockedBunnies = new List<int>() { };
 
     // constants
     private int nbBunnies = 30;
@@ -100,6 +101,10 @@ public class BunniesMenu : MonoBehaviour
             if (unlockedBunnies.Contains(bunnyNb))
             {
                 ShowBunny(bunnyNb);
+            }
+            else if (bunnyNb > (ScoreManager.nbBunnyParts / 7) + 1)
+            {
+                SceneManager.LoadScene("BunnyModel");
             }
         }
     }
