@@ -1,5 +1,6 @@
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SquaresController : MonoBehaviour
 {
@@ -13,12 +14,14 @@ public class SquaresController : MonoBehaviour
     private Vector3 originPosition;
     private Vector3 direction;
 
-
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         LoadSquares();
-        Shuffle(500);
+        if (SquaresImageLoader.nbBunnyParts == 8)
+        {
+            Shuffle(500);
+        }
     }
 
     public void LoadSquares()
@@ -32,6 +35,26 @@ public class SquaresController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // no game if bunny is not complete yet
+        if (SquaresImageLoader.nbBunnyParts == 8)
+        {
+            HandleSlidingSquares();
+        }
+
+        // get hit button
+        string hitButton = MenuManager.GetHitButton();
+
+        // handle hit button
+        switch (hitButton)
+        {
+            case "Back":
+                SceneManager.LoadScene("Bunnies");
+                break;
+        }
+    }
+
+    private void HandleSlidingSquares()
+    {
         // no square selected
         if (Input.touchCount != 1)
         {
@@ -44,7 +67,7 @@ public class SquaresController : MonoBehaviour
         Vector3 touchPos = Camera.main.ScreenToWorldPoint(touch.position);
 
         // new selected square
-        if (touch.phase == TouchPhase.Began) 
+        if (touch.phase == TouchPhase.Began)
         {
             SelectSquare(touchPos);
         }

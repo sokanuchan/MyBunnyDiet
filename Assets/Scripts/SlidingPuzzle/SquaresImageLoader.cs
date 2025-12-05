@@ -7,13 +7,14 @@ public class SquaresImageLoader : MonoBehaviour
 {
     public SpriteRenderer[] squares;
     public static int bunnyIndex = 1;
+    public static int nbBunnyParts = 0;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         // load sprite for each square
-        for (int i = 0; i < squares.Count(); i++)
+        for (int i = 0; i < nbBunnyParts; i++)
         {
             squares[i].sprite = Resources.Load<Sprite>("Images/Bunnies/Bunny-" + bunnyIndex.ToString() + "/SplittedPixelArt/sprite_" + i.ToString());
         }

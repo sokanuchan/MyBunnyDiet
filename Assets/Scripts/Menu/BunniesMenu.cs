@@ -102,9 +102,10 @@ public class BunniesMenu : MonoBehaviour
             {
                 ShowBunny(bunnyNb);
             }
-            else if (bunnyNb > (ScoreManager.nbBunnyParts / 7) + 1)
+            else if (bunnyNb <= (ScoreManager.nbBunnyParts / 7) + 1)
             {
-                SceneManager.LoadScene("BunnyModel");
+                SquaresImageLoader.nbBunnyParts = ScoreManager.nbBunnyParts - (bunnyNb - 1) * 8;
+                SceneManager.LoadScene("SlidingPuzzle");
             }
         }
     }
