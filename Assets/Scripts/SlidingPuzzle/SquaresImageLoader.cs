@@ -1,7 +1,4 @@
-using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class SquaresImageLoader : MonoBehaviour
 {

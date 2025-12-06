@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 public class DateUtils
 {
@@ -23,5 +25,16 @@ public class DateUtils
         }; 
         
         return months[monthIndex - 1];
+    }
+
+    public static DateTime GetCurrentInputDate()
+    {
+        if (DailyInput.playerInputs.Count == 0)
+        {
+            return DateTime.MaxValue;
+        }
+
+        DateTime lastInputDate = DateTime.ParseExact(DailyInput.playerInputs.Last().Key, dailyInputDateFormat, null);
+        return lastInputDate.AddDays(1);
     }
 }

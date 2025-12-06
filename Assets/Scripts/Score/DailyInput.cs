@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 
 public class DailyInput
@@ -8,7 +7,7 @@ public class DailyInput
         None,
         VerySad,
         Sad,
-        Medium,
+        Neutral,
         Happy,
         VeryHappy,
     }
@@ -32,5 +31,5 @@ public class DailyInput
     public static string currentDate;
 
     // all player inputs
-    public static Dictionary<string, DailyInput> playerInputs = new Dictionary<string, DailyInput>();
+    public static SortedDictionary<string, DailyInput> playerInputs = new SortedDictionary<string, DailyInput>();
 }
