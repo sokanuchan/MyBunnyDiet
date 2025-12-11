@@ -64,7 +64,7 @@ public class CalendarManager : MonoBehaviour
             currentDay.SetActive(dayPresentInMonth);
             if (!dayPresentInMonth)
             {
-                return;
+                continue;
             }
 
             // check if day is inputable (must not be after currentInputDate)
@@ -106,35 +106,63 @@ public class CalendarManager : MonoBehaviour
             }
 
             // Calories
-            if (isInputable && calendarMode == CalendarMode.Calories)
+            if (calendarMode == CalendarMode.Calories)
             {
+                daysImages[dayIndex - 1].SetActive(true);
+                dayImage.sprite = Resources.Load<Sprite>("Images/UI/Square");
+
                 if (DailyInput.playerInputs.ContainsKey(currentDateStr))
                 {
-                    dayIndices[dayIndex - 1].text = DailyInput.playerInputs[currentDateStr].calories.ToString();
+                    ScoreManager.ScoreChanges scoreChanges = new ScoreManager.ScoreChanges();
+                    ScoreManager.ChangeCaloriesScore(scoreChanges, DailyInput.playerInputs[currentDateStr].calories);
+                    dayIndices[dayIndex - 1].text = scoreChanges.totalChanges.ToString();
+                    dayImage.color = GetScoreColor(scoreChanges.totalChanges);
                 }
                 else
                 {
                     dayIndices[dayIndex - 1].text = "0";
+                    dayImage.color = new Color(0, 0, 0, 0.8f);
                 }
                 dayIndices[dayIndex - 1].fontSize = 100;
             }
 
             // Sport
-            if (isInputable && calendarMode == CalendarMode.Sport)
+            if (calendarMode == CalendarMode.Sport)
             {
+                daysImages[dayIndex - 1].SetActive(true);
                 if (DailyInput.playerInputs.ContainsKey(currentDateStr))
                 {
                     dayIndices[dayIndex - 1].text = (DailyInput.playerInputs[currentDateStr].walk 
                                                     + DailyInput.playerInputs[currentDateStr].muscu 
                                                     + DailyInput.playerInputs[currentDateStr].cardio).ToString();
+
+                    ScoreManager.ScoreChanges scoreChanges = new ScoreManager.ScoreChanges();
+                    ScoreManager.ChangeSportScore(scoreChanges, ScoreManager.walkRatio, "", DailyInput.playerInputs[currentDateStr].walk);
+                    ScoreManager.ChangeSportScore(scoreChanges, ScoreManager.muscuRatio, "", DailyInput.playerInputs[currentDateStr].muscu);
+                    ScoreManager.ChangeSportScore(scoreChanges, ScoreManager.cardioRatio, "", DailyInput.playerInputs[currentDateStr].cardio);
+                    dayIndices[dayIndex - 1].text = scoreChanges.totalChanges.ToString();
+                    dayImage.color = GetScoreColor(scoreChanges.totalChanges);
                 }
                 else
                 {
                     dayIndices[dayIndex - 1].text = "0";
+                    dayImage.color = new Color(0, 0, 0, 0.8f);
                 }
                 dayIndices[dayIndex - 1].fontSize = 100;
             }
         }
+    }
+
+    private Color GetScoreColor(int score)
+    {
+        // positive score
+        if (score >= 0)
+        {
+            return new Color(1 - 0.003f * score, 1, 1 - 0.003f * score);
+        }
+
+        // negative score
+        return new Color(1,1 + 0.003f * score, 1 + 0.003f * score);
     }
 
     // Update is called once per frame

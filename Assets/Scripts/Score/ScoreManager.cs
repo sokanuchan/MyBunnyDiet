@@ -6,15 +6,15 @@ public class ScoreManager : MonoBehaviour
     public static int caloriesPerDayGoal = 2300;
     public static int totalScore = 0;
     public static int nbBunnyParts = 0;
+    public static float muscuRatio = 17;
+    public static float walkRatio = 1f/10;
+    public static float cardioRatio = 9;
 
     private static int currentScore;
 
     // constants
     private static int caloriesPerDayMargin = 300;
     private static int tooLowCaloriesScoreRatio = 5;
-    private static float muscuRatio = 17;
-    private static float walkRatio = 1f/10;
-    private static float cardioRatio = 9;
 
     public class ScoreChanges
     {
@@ -35,7 +35,7 @@ public class ScoreManager : MonoBehaviour
         
     }
 
-    private static void ChangeCaloriesScore(ScoreChanges scoreChanges, int calories)
+    public static void ChangeCaloriesScore(ScoreChanges scoreChanges, int calories)
     {
         int tmpScoreChange = 0;
 

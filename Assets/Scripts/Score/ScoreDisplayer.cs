@@ -89,8 +89,11 @@ public class ScoreDisplayer : MonoBehaviour
         int endScore = ScoreManager.totalScore;
         int scoreLeftToAdd = endScore - startScore;
 
+        // if no score progress, do at least one loop
+        bool scoreProgressDisplayed = false;
+
         // add score in chunks of 1000, because the bars are 1000 points long
-        while (scoreLeftToAdd > 0)
+        while (scoreLeftToAdd > 0 || !scoreProgressDisplayed)
         {
             // get start and end of current progress
             scoreProgressStart = startScore - nbBunnyParts * 1000;
@@ -109,6 +112,9 @@ public class ScoreDisplayer : MonoBehaviour
 
             // wait 1s before next chunk
             yield return new WaitForSeconds(1);
+
+            // at least one loop done
+            scoreProgressDisplayed = true;
         }
 
         if (scoreLeftToAdd < 0)

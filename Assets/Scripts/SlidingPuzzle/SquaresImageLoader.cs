@@ -10,8 +10,6 @@ public class SquaresImageLoader : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        Debug.Log(bunnyIndex);
-        Debug.Log(nbBunnyParts);
         // load sprite for each square
         for (int i = 0; i < nbBunnyParts; i++)
         {
