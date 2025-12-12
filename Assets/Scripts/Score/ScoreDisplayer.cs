@@ -1,8 +1,6 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using static ScoreManager;
 
 public class ScoreDisplayer : MonoBehaviour
 {
@@ -95,6 +93,9 @@ public class ScoreDisplayer : MonoBehaviour
         // add score in chunks of 1000, because the bars are 1000 points long
         while (scoreLeftToAdd > 0 || !scoreProgressDisplayed)
         {
+            // bunny u-turn
+            hopingBunny.GetComponent<SpriteRenderer>().flipX = scoreLeftToAdd < 0;
+
             // get start and end of current progress
             scoreProgressStart = startScore - nbBunnyParts * 1000;
             scoreProgressEnd = Mathf.Min(scoreProgressStart + scoreLeftToAdd, 1000);
@@ -110,34 +111,14 @@ public class ScoreDisplayer : MonoBehaviour
             scoreLeftToAdd -= scoreDiff;
             startScore += scoreDiff;
 
+            // bunny u-turn
+            hopingBunny.GetComponent<SpriteRenderer>().flipX = false;
+
             // wait 1s before next chunk
             yield return new WaitForSeconds(1);
 
             // at least one loop done
             scoreProgressDisplayed = true;
-        }
-
-        if (scoreLeftToAdd < 0)
-        {
-            // bunny u-turn
-            hopingBunny.GetComponent<SpriteRenderer>().flipX = true;
-
-            // get start and end of current progress
-            scoreProgressStart = startScore % 1000;
-            scoreProgressEnd = scoreProgressStart + scoreLeftToAdd;
-
-            // update bounds
-            scoreProgressLowerBound.text = (nbBunnyParts * 1000).ToString();
-            scoreProgressUpperBound.text = ((nbBunnyParts + 1) * 1000).ToString();
-
-            // update one chunk
-            yield return ScoreProgress();
-            int scoreDiff = scoreProgressEnd - scoreProgressStart;
-            scoreLeftToAdd -= scoreDiff;
-            startScore += scoreDiff;
-
-            // bunny u-turn
-            hopingBunny.GetComponent<SpriteRenderer>().flipX = false;
         }
 
         homeButton.SetActive(true);

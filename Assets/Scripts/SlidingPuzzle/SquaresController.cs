@@ -23,6 +23,14 @@ public class SquaresController : MonoBehaviour
         {
             Shuffle(500);
         }
+
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                Debug.Log(currentSquaresState[i, j] + " ");
+            }
+        }
     }
 
     public void LoadSquares()
@@ -190,6 +198,7 @@ public class SquaresController : MonoBehaviour
         Destroy(crackers, crackers.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).length);
         isPuzzleSolved = true;
         BunniesMenu.unlockedBunnies.Add(SquaresImageLoader.bunnyIndex);
+        SaveManager.Save();
     }
 
     private void Shuffle(int shuffleCount)

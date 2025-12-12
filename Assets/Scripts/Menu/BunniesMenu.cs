@@ -52,7 +52,7 @@ public class BunniesMenu : MonoBehaviour
             }
 
             // locked / unlocked bunnies
-            if (bunnyNb <= (ScoreManager.nbBunnyParts / 7) + 1)
+            if (bunnyNb <= (ScoreManager.nbBunnyParts / 8) + 1)
             {
                 bunnies[i].GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Images/UI/Bunnies/QuestionMarkWhite");
             }

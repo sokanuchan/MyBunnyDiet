@@ -115,5 +115,6 @@ public class ScoreManager : MonoBehaviour
         // update player input
         DailyInput.currentDailyInput.score = newScore;
         DailyInput.playerInputs[currentDate] = DailyInput.currentDailyInput;
+        SaveManager.Save();
     }
 }
