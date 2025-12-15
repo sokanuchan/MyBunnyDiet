@@ -3,14 +3,16 @@ using UnityEngine;
 
 public class ScoreManager : MonoBehaviour
 {
-    public static int caloriesPerDayGoal = 2300;
     public static int totalScore = 0;
+    private static int currentScore;
     public static int nbBunnyParts = 0;
+    public static int startingWeight = 127;
+    public static int height = 158;
+    public static int age = 21;
     public static float muscuRatio = 17;
-    public static float walkRatio = 1f/10;
+    public static float walkRatio = 1f / 10;
     public static float cardioRatio = 9;
 
-    private static int currentScore;
 
     // constants
     private static int caloriesPerDayMargin = 300;
@@ -26,7 +28,7 @@ public class ScoreManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -35,9 +37,27 @@ public class ScoreManager : MonoBehaviour
         
     }
 
+    public static int GetCaloriesGoal()
+    {
+        // compute current weight
+        int currentWeight = startingWeight - (totalScore / 1000);
+
+        // compute base metabolism
+        float weightMetabolism = currentWeight * 10;
+        float heightMetabolism = height * 6.25f;
+        float ageMetabolism = 5 * age;
+        float constantMetabolism = 161;
+        float metabolismRatio = 1.25f;
+        float metabolism = weightMetabolism + heightMetabolism - ageMetabolism - constantMetabolism;
+
+        // return complete metabolism
+        return (int)(metabolism * metabolismRatio);
+    }
+
     public static void ChangeCaloriesScore(ScoreChanges scoreChanges, int calories)
     {
         int tmpScoreChange = 0;
+        int caloriesPerDayGoal = GetCaloriesGoal();
 
         // calories below minimum
         if (calories < (caloriesPerDayGoal - caloriesPerDayMargin))

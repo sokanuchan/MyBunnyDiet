@@ -26,6 +26,9 @@ public class MainMenu : MonoBehaviour
             case "Bunnies":
                 SceneManager.LoadScene("Bunnies");
                 break;
+            case "Advices":
+                SceneManager.LoadScene("Advices");
+                break;
         }
     }
 }
