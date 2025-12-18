@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 
 public class CalendarManager : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class CalendarManager : MonoBehaviour
     public GameObject[] days;
     public GameObject[] daysImages;
     public Text[] dayIndices;
+    public GameObject dayOutline;
 
     private int currentYear;
     private int currentMonth;
@@ -31,6 +33,7 @@ public class CalendarManager : MonoBehaviour
         currentMonth = DateTime.Now.Month;
         DisplayMonth();
         InitCalendarModeButtons();
+        DisplayRedOutlineOnCurrentDay();
     }
 
     private void DisplayMonth()
@@ -48,6 +51,21 @@ public class CalendarManager : MonoBehaviour
         CalendarModeButtons[CalendarMode.Calories] = GameObject.Find("CaloriesButton");
         CalendarModeButtons[CalendarMode.Mood] = GameObject.Find("MoodButton");
         CalendarModeButtons[CalendarMode.Sport] = GameObject.Find("SportButton");
+    }
+
+    private void DisplayRedOutlineOnCurrentDay()
+    {
+        // check if current day is displayed
+        if (DateTime.Now.Month != currentMonth)
+        {
+            dayOutline.SetActive(false);
+            return;
+        }
+
+        // find current day
+        dayOutline.SetActive(true);
+        GameObject currentDay = GameObject.Find("day_" + DateTime.Now.Day.ToString());
+        dayOutline.transform.position = currentDay.transform.Find("DayImage").position + new Vector3(0, 0, -3);
     }
 
     private void UpdateDaysInMonth()
