@@ -5,7 +5,7 @@ public class MenuManager : MonoBehaviour
 {
     public static string GetHitButton()
     {
-        // no touch selected
+        // no touch
         if (Input.touches.Length != 1)
         {
             return "";

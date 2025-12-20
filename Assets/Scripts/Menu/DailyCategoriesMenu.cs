@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class DailyCategoriesMenu : MonoBehaviour
 {
     public Text date;
+    public Text currentCalories;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -17,6 +18,9 @@ public class DailyCategoriesMenu : MonoBehaviour
 
         // update date with current input date
         date.text = DateUtils.ChangeDateFormat(DailyInput.currentDate, DateUtils.dailyInputDateFormat, DateUtils.playerDisplayDateFormat);
+
+        // update current calories with current input calories
+        currentCalories.text = "Current: " + DailyInput.currentDailyInput.calories;
     }
 
     // Update is called once per frame

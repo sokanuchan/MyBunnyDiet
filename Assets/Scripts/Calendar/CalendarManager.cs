@@ -3,7 +3,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 
 public class CalendarManager : MonoBehaviour
 {
@@ -132,7 +131,7 @@ public class CalendarManager : MonoBehaviour
                 if (DailyInput.playerInputs.ContainsKey(currentDateStr))
                 {
                     ScoreManager.ScoreChanges scoreChanges = new ScoreManager.ScoreChanges();
-                    ScoreManager.ChangeCaloriesScore(scoreChanges, DailyInput.playerInputs[currentDateStr].calories);
+                    ScoreManager.ChangeCaloriesScore(scoreChanges, DailyInput.playerInputs[currentDateStr].calories, currentDate);
                     dayIndices[dayIndex - 1].text = scoreChanges.totalChanges.ToString();
                     dayImage.color = GetScoreColor(scoreChanges.totalChanges);
                 }

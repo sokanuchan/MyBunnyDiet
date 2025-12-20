@@ -187,6 +187,7 @@ GameObject:
   - component: {fileID: 192287619}
   - component: {fileID: 192287618}
   - component: {fileID: 192287620}
+  - component: {fileID: 192287621}
   m_Layer: 0
   m_Name: MoodNeutral
   m_TagString: Untagged
@@ -258,7 +259,7 @@ Transform:
   m_GameObject: {fileID: 192287617}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.8577398, y: 2.6951296, z: 9.924}
+  m_LocalPosition: {x: 0, y: 0.01999998, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -310,6 +311,18 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.97859323, y: 1.55}
   m_EdgeRadius: 0
+--- !u!114 &192287621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 192287617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 337785f9fbb16cf449b4e777f652a5db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &233572267
 GameObject:
   m_ObjectHideFlags: 0
@@ -321,6 +334,7 @@ GameObject:
   - component: {fileID: 233572269}
   - component: {fileID: 233572268}
   - component: {fileID: 233572270}
+  - component: {fileID: 233572271}
   m_Layer: 0
   m_Name: MoodVerySad
   m_TagString: Untagged
@@ -392,7 +406,7 @@ Transform:
   m_GameObject: {fileID: 233572267}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.1422602, y: 2.6951296, z: 9.924}
+  m_LocalPosition: {x: -2, y: 0.01999998, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -444,6 +458,18 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.0038784, y: 1.55}
   m_EdgeRadius: 0
+--- !u!114 &233572271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 233572267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 337785f9fbb16cf449b4e777f652a5db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &737706098
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -613,7 +639,7 @@ Transform:
   m_GameObject: {fileID: 1263004625}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.8577398, y: -2.6951296, z: -9.924}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -635,6 +661,7 @@ GameObject:
   - component: {fileID: 1511652673}
   - component: {fileID: 1511652672}
   - component: {fileID: 1511652674}
+  - component: {fileID: 1511652675}
   m_Layer: 0
   m_Name: MoodSad
   m_TagString: Untagged
@@ -706,7 +733,7 @@ Transform:
   m_GameObject: {fileID: 1511652671}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.1422602, y: 2.6951296, z: 9.924}
+  m_LocalPosition: {x: -1, y: 0.01999998, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -758,6 +785,18 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.9920102, y: 1.55}
   m_EdgeRadius: 0
+--- !u!114 &1511652675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1511652671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 337785f9fbb16cf449b4e777f652a5db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1652096372
 GameObject:
   m_ObjectHideFlags: 0
@@ -769,6 +808,7 @@ GameObject:
   - component: {fileID: 1652096374}
   - component: {fileID: 1652096373}
   - component: {fileID: 1652096375}
+  - component: {fileID: 1652096376}
   m_Layer: 0
   m_Name: MoodVeryHappy
   m_TagString: Untagged
@@ -840,7 +880,7 @@ Transform:
   m_GameObject: {fileID: 1652096372}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.85774, y: 2.6951296, z: 9.924}
+  m_LocalPosition: {x: 2, y: 0.01999998, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -892,6 +932,18 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.9961755, y: 1.55}
   m_EdgeRadius: 0
+--- !u!114 &1652096376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1652096372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 337785f9fbb16cf449b4e777f652a5db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1669390573
 GameObject:
   m_ObjectHideFlags: 0
@@ -991,6 +1043,7 @@ GameObject:
   - component: {fileID: 1716161565}
   - component: {fileID: 1716161564}
   - component: {fileID: 1716161566}
+  - component: {fileID: 1716161567}
   m_Layer: 0
   m_Name: MoodHappy
   m_TagString: Untagged
@@ -1062,7 +1115,7 @@ Transform:
   m_GameObject: {fileID: 1716161563}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.8577398, y: 2.6951296, z: 9.924}
+  m_LocalPosition: {x: 1, y: 0.02, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1114,6 +1167,18 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.0021882, y: 1.55}
   m_EdgeRadius: 0
+--- !u!114 &1716161567
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1716161563}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 337785f9fbb16cf449b4e777f652a5db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1916557463
 GameObject:
   m_ObjectHideFlags: 0
@@ -1125,6 +1190,7 @@ GameObject:
   - component: {fileID: 1916557466}
   - component: {fileID: 1916557465}
   - component: {fileID: 1916557464}
+  - component: {fileID: 1916557467}
   m_Layer: 0
   m_Name: Back
   m_TagString: Untagged
@@ -1248,6 +1314,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1916557467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1916557463}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 337785f9fbb16cf449b4e777f652a5db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2001867965
 GameObject:
   m_ObjectHideFlags: 0

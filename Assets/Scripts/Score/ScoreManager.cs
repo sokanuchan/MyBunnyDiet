@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -37,27 +38,54 @@ public class ScoreManager : MonoBehaviour
         
     }
 
-    public static int GetCaloriesGoal()
+    public static int GetCaloriesGoal(DateTime date)
     {
-        // compute current weight
-        int currentWeight = startingWeight - (totalScore / 1000);
+        // compute current weight (1kg should be lost per about 8000 score)
+        int currentWeight = startingWeight - (GetTotalScoreAtCurrentDay(date) / 8000);
+
+        for (currentWeight = 1; currentWeight < startingWeight; currentWeight++)
+        {
+            // compute base metabolism
+            float weightMetabolism = currentWeight * 10;
+            float heightMetabolism = height * 6.25f;
+            float ageMetabolism = 5 * age;
+            float constantMetabolism = 161;
+            float metabolismRatio = 1.3f;
+            float metabolism = weightMetabolism + heightMetabolism - ageMetabolism - constantMetabolism;
+
+
+            Debug.Log(currentWeight.ToString() + ": " + (int)(metabolism * metabolismRatio));
+        }
 
         // compute base metabolism
-        float weightMetabolism = currentWeight * 10;
-        float heightMetabolism = height * 6.25f;
-        float ageMetabolism = 5 * age;
-        float constantMetabolism = 161;
-        float metabolismRatio = 1.25f;
-        float metabolism = weightMetabolism + heightMetabolism - ageMetabolism - constantMetabolism;
 
         // return complete metabolism
-        return (int)(metabolism * metabolismRatio);
+        return 1;
     }
 
-    public static void ChangeCaloriesScore(ScoreChanges scoreChanges, int calories)
+    private static int GetTotalScoreAtCurrentDay(DateTime date)
+    {
+        int score = 0;
+
+        // add up all scores until specified date
+        foreach (string playerInputDate in DailyInput.playerInputs.Keys)
+        {
+            // stop adding up scores if we are past the specified date
+            if (date < DateTime.ParseExact(playerInputDate, DateUtils.dailyInputDateFormat, null))
+            {
+                break;
+            }
+
+            score += DailyInput.playerInputs[playerInputDate].score;
+        }
+
+        return score;
+    }
+
+    public static void ChangeCaloriesScore(ScoreChanges scoreChanges, int calories, DateTime date)
     {
         int tmpScoreChange = 0;
-        int caloriesPerDayGoal = GetCaloriesGoal();
+        int caloriesPerDayGoal = GetCaloriesGoal(date);
 
         // calories below minimum
         if (calories < (caloriesPerDayGoal - caloriesPerDayMargin))
@@ -92,12 +120,12 @@ public class ScoreManager : MonoBehaviour
         scoreChanges.positiveChanges.Add(tmpScoreChange.ToString() + " " + sportNameToDisplay);
     }
 
-    public static ScoreChanges GetScoreChanges(DailyInput dailyInput)
+    public static ScoreChanges GetScoreChanges(DailyInput dailyInput, DateTime date)
     {
         ScoreChanges scoreChanges = new ScoreChanges();
 
         // calories changes
-        ChangeCaloriesScore(scoreChanges, dailyInput.calories);
+        ChangeCaloriesScore(scoreChanges, dailyInput.calories, date);
 
         // sport changes
         ChangeSportScore(scoreChanges, muscuRatio, "Musculation", dailyInput.muscu);

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -37,7 +38,8 @@ public class ScoreDisplayer : MonoBehaviour
     private void DisplayScoreChanges()
     {
         // Get score changes
-        ScoreManager.ScoreChanges scoreChanges = ScoreManager.GetScoreChanges(DailyInput.currentDailyInput);
+        DateTime currentDailyInputDate = DateTime.ParseExact(DailyInput.currentDate, DateUtils.dailyInputDateFormat, null);
+        ScoreManager.ScoreChanges scoreChanges = ScoreManager.GetScoreChanges(DailyInput.currentDailyInput, currentDailyInputDate);
 
         // display bonus
         bonus.text = "";
