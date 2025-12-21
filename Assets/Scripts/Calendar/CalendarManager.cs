@@ -32,7 +32,6 @@ public class CalendarManager : MonoBehaviour
         currentMonth = DateTime.Now.Month;
         DisplayMonth();
         InitCalendarModeButtons();
-        DisplayRedOutlineOnCurrentDay();
     }
 
     private void DisplayMonth()
@@ -168,6 +167,9 @@ public class CalendarManager : MonoBehaviour
                 dayIndices[dayIndex - 1].fontSize = 100;
             }
         }
+
+        // display red outline on current day if it is in current displayed month
+        DisplayRedOutlineOnCurrentDay();
     }
 
     private Color GetScoreColor(int score)

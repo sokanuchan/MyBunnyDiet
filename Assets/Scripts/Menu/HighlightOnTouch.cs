@@ -3,10 +3,16 @@ using UnityEngine;
 public class HighlightOnTouch : MonoBehaviour
 {
     private GameObject highlight;
+    private bool wasTouchedLastFrame = false;
+    private bool touchEnds = false;
+    private AudioManager audioManager;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        // find audio manager
+        audioManager = FindFirstObjectByType<AudioManager>();
+
         // create the highlight
         highlight = Instantiate(gameObject);
         highlight.GetComponent<SpriteRenderer>().material.shader = Shader.Find("GUI/Text Shader");
@@ -30,7 +36,24 @@ public class HighlightOnTouch : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        highlight.SetActive(IsBeingTouched());
+        // highlight only if object is touched
+        bool isBeingTouched = IsBeingTouched();
+        highlight.SetActive(isBeingTouched);
+
+        // play clic sound on first frame the object is touched
+        if (!wasTouchedLastFrame && isBeingTouched)
+        {
+            audioManager.Play("Clic");
+        }
+
+        // play release clic sound if the touch ends on the object
+        if (touchEnds && isBeingTouched)
+        {
+            audioManager.Play("ClicRelease");
+        }
+
+        // update wasTouchedLastFrame
+        wasTouchedLastFrame = isBeingTouched;
     }
 
     private bool IsBeingTouched()
@@ -44,6 +67,9 @@ public class HighlightOnTouch : MonoBehaviour
         // find where the player is currently touching the screen
         Touch touch = Input.touches[0];
         Vector3 touchPos = Camera.main.ScreenToWorldPoint(touch.position);
+
+        // check touch phase
+        touchEnds = touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled;
 
         // check if this object is being touched
         RaycastHit2D hit = Physics2D.Raycast(touchPos, Vector2.zero);

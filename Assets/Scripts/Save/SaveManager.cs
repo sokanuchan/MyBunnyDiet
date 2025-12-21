@@ -32,6 +32,7 @@ public class SaveManager
 
     public static void ResetSave()
     {
+        DailyInput.playerInputs = new SortedDictionary<string, DailyInput>();
         BunniesMenu.unlockedBunnies = new List<int>();
         ScoreManager.nbBunnyParts = 0;
         ScoreManager.totalScore = 0;

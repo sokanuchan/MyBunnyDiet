@@ -8,6 +8,7 @@ public class MainMenu : MonoBehaviour
     void Start()
     {
         SaveManager.Load();
+        SaveManager.ResetSave();
     }
 
     // Update is called once per frame
