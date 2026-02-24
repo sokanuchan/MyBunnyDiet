@@ -34,7 +34,7 @@ public class AudioManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        Play("Background");
+
     }
 
     public void Play(string name)
@@ -47,12 +47,48 @@ public class AudioManager : MonoBehaviour
             return;
         }
 
+        if (s.source.isPlaying)
+        {
+            Debug.Log("Sound " + name + " already playing");
+            return;
+        }
+
         s.source.Play();
+    }
+
+    public void Stop(string name)
+    {
+
+        Sound s = Array.Find(sounds, sound => sound.name == name);
+
+        if (s == null)
+        {
+            Debug.LogWarning("Sound " + name + " not found :(");
+            return;
+        }
+
+        if (!s.source.isPlaying)
+        {
+            Debug.Log("Sound " + name + " was not playing");
+            return;
+        }
+
+        s.source.Stop();
+    }
+
+    public void StopAll()
+    {
+        foreach (Sound s in sounds)
+        {
+            s.source.Stop();
+        }
     }
 
     public void Pause(string name)
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);
+
+        bool a = s.source.isPlaying;
 
         if (s == null)
         {

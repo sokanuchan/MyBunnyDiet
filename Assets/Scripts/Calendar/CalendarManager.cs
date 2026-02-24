@@ -91,6 +91,7 @@ public class CalendarManager : MonoBehaviour
             // gray out not inputable days
             SpriteRenderer dayImage = daysImages[dayIndex - 1].GetComponent<SpriteRenderer>();
             daysImages[dayIndex - 1].SetActive(!isInputable);
+            daysImages[dayIndex - 1].transform.position = new Vector3(daysImages[dayIndex - 1].transform.position.x, daysImages[dayIndex - 1].transform.position.y, -1);
             dayImage.sprite = Resources.Load<Sprite>("Images/UI/Square");
             dayImage.color = new Color(0, 0, 0, 0.8f);
             daysImages[dayIndex - 1].transform.localScale = Vector3.one * 0.75f;
@@ -104,6 +105,7 @@ public class CalendarManager : MonoBehaviour
                 daysImages[dayIndex - 1].SetActive(true);
                 dayImage.color = new Color(1, 1, 1, 0.9f);
                 daysImages[dayIndex - 1].transform.localScale = Vector3.one * 0.5f;
+                daysImages[dayIndex - 1].transform.position = new Vector3(daysImages[dayIndex - 1].transform.position.x, daysImages[dayIndex - 1].transform.position.y, -3);
                 if (DailyInput.playerInputs.ContainsKey(currentDateStr))
                 {
                     dayImage.sprite = Resources.Load<Sprite>("Images/UI/Mood/" + DailyInput.playerInputs[currentDateStr].mood.ToString());

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -20,7 +21,7 @@ public class DailyCategoriesMenu : MonoBehaviour
         date.text = DateUtils.ChangeDateFormat(DailyInput.currentDate, DateUtils.dailyInputDateFormat, DateUtils.playerDisplayDateFormat);
 
         // update current calories with current input calories
-        currentCalories.text = "Current: " + DailyInput.currentDailyInput.calories;
+        currentCalories.text = "Current: " + DailyInput.currentDailyInput.calories + "\nExpected: " + ScoreManager.GetCaloriesGoal(DateTime.ParseExact(DailyInput.currentDate, DateUtils.dailyInputDateFormat, null)).ToString();
     }
 
     // Update is called once per frame

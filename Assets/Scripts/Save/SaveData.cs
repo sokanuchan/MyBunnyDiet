@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 [System.Serializable]
 public class SaveData
@@ -28,4 +29,10 @@ public class SaveData
     public List<int> unlockedBunnies;
     public int nbBunnyParts;
     public int totalScore;
+
+    // Mini game
+    [DataMember(IsRequired = false)]
+    public int bunnyStars;
+    [DataMember(IsRequired = false)]
+    public List<string> boughtItems;
 }

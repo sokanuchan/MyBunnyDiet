@@ -8,7 +8,8 @@ public class MainMenu : MonoBehaviour
     void Start()
     {
         SaveManager.Load();
-        SaveManager.ResetSave();
+        FindFirstObjectByType<AudioManager>().StopAll();
+        FindFirstObjectByType<AudioManager>().Play("Background");
     }
 
     // Update is called once per frame
@@ -28,6 +29,9 @@ public class MainMenu : MonoBehaviour
                 break;
             case "Advices":
                 SceneManager.LoadScene("Advices");
+                break;
+            case "MiniGame":
+                SceneManager.LoadScene("MiniGameMenu");
                 break;
         }
     }

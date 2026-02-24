@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1282927097045393010}
   - component: {fileID: 3035669988519179057}
   - component: {fileID: 2825509298186243494}
+  - component: {fileID: 8882425016856682709}
   m_Layer: 0
   m_Name: BunnyHops_0
   m_TagString: Untagged
@@ -110,3 +111,16 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &8882425016856682709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6707663852535293606}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 136b51c6190f32542b8f0e72c55091f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundName: BunnyWalk

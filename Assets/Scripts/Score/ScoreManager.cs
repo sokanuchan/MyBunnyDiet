@@ -43,24 +43,16 @@ public class ScoreManager : MonoBehaviour
         // compute current weight (1kg should be lost per about 8000 score)
         int currentWeight = startingWeight - (GetTotalScoreAtCurrentDay(date) / 8000);
 
-        for (currentWeight = 1; currentWeight < startingWeight; currentWeight++)
-        {
-            // compute base metabolism
-            float weightMetabolism = currentWeight * 10;
-            float heightMetabolism = height * 6.25f;
-            float ageMetabolism = 5 * age;
-            float constantMetabolism = 161;
-            float metabolismRatio = 1.3f;
-            float metabolism = weightMetabolism + heightMetabolism - ageMetabolism - constantMetabolism;
-
-
-            Debug.Log(currentWeight.ToString() + ": " + (int)(metabolism * metabolismRatio));
-        }
-
         // compute base metabolism
+        float weightMetabolism = currentWeight * 10;
+        float heightMetabolism = height * 6.25f;
+        float ageMetabolism = 5 * age;
+        float constantMetabolism = 161;
+        float metabolismRatio = 1.3f;
+        float metabolism = weightMetabolism + heightMetabolism - ageMetabolism - constantMetabolism;
 
         // return complete metabolism
-        return 1;
+        return (int)(metabolism * metabolismRatio);
     }
 
     private static int GetTotalScoreAtCurrentDay(DateTime date)
