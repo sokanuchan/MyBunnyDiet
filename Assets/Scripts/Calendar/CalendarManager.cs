@@ -247,7 +247,7 @@ public class CalendarManager : MonoBehaviour
 
     void ChangeCalendarMode(CalendarMode newCalendarMode)
     {
-        CalendarModeButtons[calendarMode].GetComponent<SpriteRenderer>().color = new Color(0.8f, 0.8f, 0.8f);
+        CalendarModeButtons[calendarMode].GetComponent<SpriteRenderer>().color = new Color(0.5f, 0.5f, 0.5f);
         calendarMode = newCalendarMode;
         CalendarModeButtons[calendarMode].GetComponent<SpriteRenderer>().color = new Color(1, 1, 1);
     }
