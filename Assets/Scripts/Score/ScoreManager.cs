@@ -7,7 +7,7 @@ public class ScoreManager : MonoBehaviour
     public static int totalScore = 0;
     private static int currentScore;
     public static int nbBunnyParts = 0;
-    public static int startingWeight = 127;
+    public static int startingWeight = 135;
     public static int height = 158;
     public static int age = 21;
     public static float muscuRatio = 17;
@@ -38,24 +38,53 @@ public class ScoreManager : MonoBehaviour
         
     }
 
-    public static int GetCaloriesGoal(DateTime date)
+    private static int ComputeCalories(bool isMan, int weight, int height, int age, int activity)
     {
-        // compute current weight (1kg should be lost per about 8000 score)
-        int currentWeight = startingWeight - (GetTotalScoreAtCurrentDay(date) / 8000);
+        // sex ratio
+        int sex_ratio = 259;
+        if (!isMan)
+        {
+            sex_ratio = 230;
+        }
 
-        // compute base metabolism
-        float weightMetabolism = currentWeight * 10;
-        float heightMetabolism = height * 6.25f;
-        float ageMetabolism = 5 * age;
-        float constantMetabolism = 161;
-        float metabolismRatio = 1.3f;
-        float metabolism = weightMetabolism + heightMetabolism - ageMetabolism - constantMetabolism;
+        // weight ratio
+        float weight_ratio = (float)Math.Pow(weight, 0.48);
 
-        // return complete metabolism
-        return (int)(metabolism * metabolismRatio);
+        // height ratio
+        float height_ratio = (float)Math.Pow(height / 100f, 0.50);
+
+        // age ratio
+        float age_ratio = (float)Math.Pow(age, -0.13);
+
+        // activity ratio
+        float activity_ratio = 1 + (activity / 100f * 0.37f);
+        Debug.Log((sex_ratio, weight_ratio, height_ratio, age_ratio, activity_ratio));
+
+        return (int)(sex_ratio * weight_ratio * height_ratio * age_ratio * activity_ratio);
     }
 
-    private static int GetTotalScoreAtCurrentDay(DateTime date)
+    public static int GetCaloriesGoal(DateTime date)
+    {
+        // compute weight at given date (1kg should be lost per about 8000 score)
+        int weightAtDate = startingWeight - (ComputeTotalScoreUntilDay(date) / 8000);
+
+        // get activity of given day
+        string dateStr = date.ToString(DateUtils.dailyInputDateFormat);
+        int activity = 0;
+        if (DailyInput.playerInputs.ContainsKey(dateStr))
+        {
+            activity = DailyInput.playerInputs[dateStr].activity;
+        }
+        else
+        {
+            activity = DailyInput.currentDailyInput.activity;
+        }
+
+        // compute base metabolism
+        return ComputeCalories(false, weightAtDate, height, age, activity);
+    }
+
+    private static int ComputeTotalScoreUntilDay(DateTime date)
     {
         int score = 0;
 

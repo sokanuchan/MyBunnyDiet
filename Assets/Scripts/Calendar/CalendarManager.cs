@@ -3,12 +3,15 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using System.Linq;
 
 public class CalendarManager : MonoBehaviour
 {
     public Text displayedDate;
     public GameObject[] days;
     public GameObject[] daysImages;
+    private List<Vector3> daysImagesPosTmp = new List<Vector3>();
+    private List<Vector3> daysImagesScaleTmp = new List<Vector3>();
     public Text[] dayIndices;
     public GameObject dayOutline;
 
@@ -22,12 +25,20 @@ public class CalendarManager : MonoBehaviour
         DayIndex,
         Mood,
         Calories,
-        Sport
+        Sport,
+        Activity
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        // init day image tmp lists
+        foreach (GameObject daysImage in daysImages)
+        {
+            daysImagesPosTmp.Add(daysImage.transform.position);
+            daysImagesScaleTmp.Add(daysImage.transform.localScale);
+        }
+
         currentYear = DateTime.Now.Year;
         currentMonth = DateTime.Now.Month;
         DisplayMonth();
@@ -45,7 +56,7 @@ public class CalendarManager : MonoBehaviour
 
     void InitCalendarModeButtons()
     {
-        CalendarModeButtons[CalendarMode.DayIndex] = GameObject.Find("DayIndexButton");
+        CalendarModeButtons[CalendarMode.Activity] = GameObject.Find("ActivityButton");
         CalendarModeButtons[CalendarMode.Calories] = GameObject.Find("CaloriesButton");
         CalendarModeButtons[CalendarMode.Mood] = GameObject.Find("MoodButton");
         CalendarModeButtons[CalendarMode.Sport] = GameObject.Find("SportButton");
@@ -69,6 +80,13 @@ public class CalendarManager : MonoBehaviour
     private void UpdateDaysInMonth()
     {
         int nbDaysInMonth = DateTime.DaysInMonth(currentYear, currentMonth);
+
+        // restore day image
+        for (int dayImageIndex = 0; dayImageIndex < daysImages.Length; dayImageIndex++)
+        {
+            daysImages[dayImageIndex].transform.position = daysImagesPosTmp[dayImageIndex];
+            daysImages[dayImageIndex].transform.localScale = daysImagesScaleTmp[dayImageIndex];
+        }
 
         for (int dayIndex = 1; dayIndex <= 31; dayIndex++)
         {
@@ -144,6 +162,28 @@ public class CalendarManager : MonoBehaviour
                 dayIndices[dayIndex - 1].fontSize = 100;
             }
 
+            // Activity
+            if (isInputable
+                && calendarMode == CalendarMode.Activity)
+            {
+                daysImages[dayIndex - 1].SetActive(true);
+                daysImages[dayIndex - 1].transform.localScale = Vector3.one * 0.5f;
+                daysImages[dayIndex - 1].transform.position = new Vector3(daysImages[dayIndex - 1].transform.position.x, daysImages[dayIndex - 1].transform.position.y, -3);
+                if (DailyInput.playerInputs.ContainsKey(currentDateStr))
+                {
+                    int currentActivity = DailyInput.playerInputs[currentDateStr].activity;
+                    dayImage.color = GetActivityColor(currentActivity);
+                    Debug.Log(dayImage.color.ToString() + " " + currentDateStr);
+                    dayImage.sprite = Resources.Load<Sprite>("Images/UI/Square");
+                    dayImage.transform.localScale = new Vector3(0.7f, currentActivity / 100f * 0.7f, 0);
+                    dayImage.transform.position += new Vector3(0, -0.325f + currentActivity / 325f, 0);
+                }
+                else
+                {
+                    dayImage.sprite = null;
+                }
+            }
+
             // Sport
             if (calendarMode == CalendarMode.Sport)
             {
@@ -186,6 +226,12 @@ public class CalendarManager : MonoBehaviour
         return new Color(1,1 + 0.003f * score, 1 + 0.003f * score);
     }
 
+    private Color GetActivityColor(int activity)
+    {
+        // The bluer the smaller the activity is, the greener the higher
+        return new Color(0, activity / 100f, (100 - activity) / 100f);
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -225,8 +271,8 @@ public class CalendarManager : MonoBehaviour
             case "MoodButton":
                 ChangeCalendarMode(CalendarMode.Mood);
                 break;
-            case "DayIndexButton":
-                ChangeCalendarMode(CalendarMode.DayIndex);
+            case "ActivityButton":
+                ChangeCalendarMode(CalendarMode.Activity);
                 break;
             case "SportButton":
                 ChangeCalendarMode(CalendarMode.Sport);
@@ -247,7 +293,20 @@ public class CalendarManager : MonoBehaviour
 
     void ChangeCalendarMode(CalendarMode newCalendarMode)
     {
-        CalendarModeButtons[calendarMode].GetComponent<SpriteRenderer>().color = new Color(0.5f, 0.5f, 0.5f);
+        // darken old button
+        if (calendarMode != CalendarMode.DayIndex)
+        {
+            CalendarModeButtons[calendarMode].GetComponent<SpriteRenderer>().color = new Color(0.5f, 0.5f, 0.5f);
+        }
+
+        // go to day index mode button is unchecked
+        if (newCalendarMode == calendarMode)
+        {
+            calendarMode = CalendarMode.DayIndex;
+            return;
+        }
+
+        // highlight new mode
         calendarMode = newCalendarMode;
         CalendarModeButtons[calendarMode].GetComponent<SpriteRenderer>().color = new Color(1, 1, 1);
     }

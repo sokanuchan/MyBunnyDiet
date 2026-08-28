@@ -42,6 +42,9 @@ public class DailyCategoriesMenu : MonoBehaviour
             case "Mood":
                 SceneManager.LoadScene("Mood");
                 break;
+            case "Activity":
+                SceneManager.LoadScene("Activity");
+                break;
             case "Validate":
                 if (DailyInput.currentDailyInput.calories != 0)
                 {

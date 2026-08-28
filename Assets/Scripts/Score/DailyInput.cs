@@ -24,6 +24,9 @@ public class DailyInput
     // mood
     public Mood mood = Mood.None;
 
+    // activity
+    public int activity = 0;
+
     // computed score
     public int score = 0;
 
