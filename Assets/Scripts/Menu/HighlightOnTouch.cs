@@ -18,6 +18,7 @@ public class HighlightOnTouch : MonoBehaviour
         highlight.GetComponent<SpriteRenderer>().material.shader = Shader.Find("GUI/Text Shader");
         highlight.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.2f);
         highlight.transform.position = highlight.transform.position + new Vector3(0, 0, -1);
+        highlight.transform.SetParent(transform);
 
         // Deactivate colliders on highlight
         if (highlight.GetComponent<BoxCollider2D>() != null)

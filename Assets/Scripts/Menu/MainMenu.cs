@@ -33,6 +33,9 @@ public class MainMenu : MonoBehaviour
             case "MiniGame":
                 SceneManager.LoadScene("MiniGameMenu");
                 break;
+            case "Parameters":
+                SceneManager.LoadScene("Parameters");
+                break;
         }
     }
 }

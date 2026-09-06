@@ -8,8 +8,8 @@ using System.Runtime.Serialization;
 
 public class SerializationManager
 {
-    private static string savePath = Application.persistentDataPath + "/saves/";
-    private static string saveExtension = ".save";
+    public static string savePath = Application.persistentDataPath + "/saves/";
+    public static string saveExtension = ".save";
 
     public static bool Save(string saveName, object saveData)
     {
