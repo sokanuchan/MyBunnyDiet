@@ -19,12 +19,15 @@ public class ShopManager : MonoBehaviour
 
     private List<ShopItem> shopItems = new List<ShopItem>
     {
-        new ShopItem(15, "Etre une princesse pendant 5 minutes"),
-        new ShopItem(30, "Tester un nouveau plat de ton choix, fait maison"),
-        new ShopItem(40, "On invente tous les deux une choregraphie sur une musique de ton choix, on se la montre a la fin de la semaine"),
         new ShopItem(80, "Sortie musée"),
-        new ShopItem(15, "Atelier peinture aquarelle"),
-        new ShopItem(20, "Soirée jeux sur ordis à distance")
+        new ShopItem(60, "Atelier peinture"),
+        new ShopItem(30, "lecture d'une histoire"),
+        new ShopItem(60, "sortie patin a glace"),
+        new ShopItem(40, "seance d'escalade"),
+        new ShopItem(50, "Activite manuelle au choix"),
+        new ShopItem(70, "Pique-nique"),
+        new ShopItem(60, "Ton meilleur ami te cuisine le repas de ton choix"),
+        new ShopItem(15, "Regarder des lapins sur insta 15 minutes"),
     };
     private int shopItemCurrentIndex = 0;
     private int shopItemCurrentIndexModifier = 0;
