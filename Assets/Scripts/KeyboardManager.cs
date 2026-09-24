@@ -61,6 +61,18 @@ public class KeyboardManager : MonoBehaviour
             case "Cardio":
                 DailyInput.currentDailyInput.cardio = playerInput;
                 break;
+            case "Age":
+                ScoreManager.age = playerInput;
+                SaveManager.Save();
+                break;
+            case "Height":
+                ScoreManager.height = playerInput;
+                SaveManager.Save();
+                break;
+            case "StartingWeight":
+                ScoreManager.startingWeight = playerInput;
+                SaveManager.Save();
+                break;
         }
 
         // get back to previous scene

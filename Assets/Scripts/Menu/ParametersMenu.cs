@@ -24,7 +24,6 @@ public class ParametersMenu : MonoBehaviour
         switch (hitButton)
         {
             case "Reset":
-                // display reset confimation
                 DisplayResetConfirmation(true);
                 break;
             case "Yes":
@@ -34,6 +33,12 @@ public class ParametersMenu : MonoBehaviour
                 break;
             case "No":
                 DisplayResetConfirmation(false);
+                break;
+            case "Age":
+                KeyboardManager.GetInput("Quel est ton age ?\n(actuel = " + ScoreManager.age + ")", "Age");
+                break;
+            case "Height":
+                KeyboardManager.GetInput("Quel est ta taille ?\n(actuel = " + ScoreManager.height + ")", "Height");
                 break;
         }
     }

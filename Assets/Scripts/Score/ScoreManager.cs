@@ -4,20 +4,24 @@ using UnityEngine;
 
 public class ScoreManager : MonoBehaviour
 {
-    public static int totalScore = 0;
+    // current score being computed
     private static int currentScore;
+
+    public static int totalScore = 0;
     public static int nbBunnyParts = 0;
-    public static int startingWeight = 135;
-    public static int height = 158;
-    public static int age = 21;
-    public static float muscuRatio = 17;
-    public static float walkRatio = 1f / 10;
-    public static float cardioRatio = 9;
+
+    // player measurements
+    public static int startingWeight = 0;
+    public static int height = 0;
+    public static int age = 0;
 
 
     // constants
     private static int caloriesPerDayMargin = 300;
     private static int tooLowCaloriesScoreRatio = 5;
+    public static float muscuRatio = 17;
+    public static float walkRatio = 1f / 10;
+    public static float cardioRatio = 9;
 
     public class ScoreChanges
     {

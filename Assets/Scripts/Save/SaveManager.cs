@@ -17,6 +17,11 @@ public class SaveManager
         SaveData.current.bunnyStars = ShopManager.bunnyStars;
         SaveData.current.boughtItems = BoughtItemsManager.boughtItems;
 
+        // save player measurements
+        SaveData.current.age = ScoreManager.age;
+        SaveData.current.height = ScoreManager.height;
+        SaveData.current.startingWeight = ScoreManager.startingWeight;
+
         // save file
         SerializationManager.Save("save_file", SaveData.current);
     }
@@ -44,6 +49,11 @@ public class SaveManager
         {
             BoughtItemsManager.boughtItems = new List<string> ();
         }
+
+        // load player measurements
+        ScoreManager.age = SaveData.current.age;
+        ScoreManager.height = SaveData.current.height;
+        ScoreManager.startingWeight = SaveData.current.startingWeight;
     }
 
     public static void ResetSave()
@@ -54,6 +64,9 @@ public class SaveManager
         ScoreManager.totalScore = 0;
         ShopManager.bunnyStars = 0;
         BoughtItemsManager.boughtItems = new List<string>();
+        ScoreManager.age = 0;
+        ScoreManager.height = 0;
+        ScoreManager.startingWeight = 0;
 
         Save();
     }

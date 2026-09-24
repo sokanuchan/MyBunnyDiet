@@ -35,4 +35,9 @@ public class SaveData
     public int bunnyStars;
     [DataMember(IsRequired = false)]
     public List<string> boughtItems;
+
+    // player measurements
+    public int age; // years
+    public int height; // cm
+    public int startingWeight; // kg
 }

@@ -19,7 +19,7 @@ public class ShopManager : MonoBehaviour
 
     private List<ShopItem> shopItems = new List<ShopItem>
     {
-        new ShopItem(80, "Sortie musée"),
+        new ShopItem(15, "Regarder des lapins sur insta 15 minutes"),
         new ShopItem(60, "Atelier peinture"),
         new ShopItem(30, "lecture d'une histoire"),
         new ShopItem(60, "sortie patin a glace"),
@@ -27,7 +27,7 @@ public class ShopManager : MonoBehaviour
         new ShopItem(50, "Activite manuelle au choix"),
         new ShopItem(70, "Pique-nique"),
         new ShopItem(60, "Ton meilleur ami te cuisine le repas de ton choix"),
-        new ShopItem(15, "Regarder des lapins sur insta 15 minutes"),
+        new ShopItem(80, "Sortie musée"),
     };
     private int shopItemCurrentIndex = 0;
     private int shopItemCurrentIndexModifier = 0;
